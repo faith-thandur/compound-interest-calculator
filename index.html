@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compound Interest Calculator</title>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Custom Dark Charcoal Color Palette */
+    :root {
+      --bg-dark: #17191C;          /* Deep charcoal */
+      --calc-body: #24272B;        /* Dark graphite */
+      --input-bg: #30343A;         /* Slate */
+      --text-main: #E8EAED;        /* Soft white */
+      --btn-primary: #4F6D8A;      /* Steel blue */
+      --btn-hover: #31506B;        /* Deep blue */
+      --text-sub: #9BA3AD;         /* Cool gray */
+      --shadow-border: #101214;    /* Dark gray */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    /* Main Container: Side-by-Side Dashboard Layout */
+    .dashboard-container {
+      background-color: var(--calc-body);
+      border: 1px solid var(--shadow-border);
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(16, 18, 20, 0.6);
+      width: 100%;
+      max-width: 950px;
+      padding: 32px;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr; /* Left side: Inputs | Right side: Graph */
+      gap: 32px;
+    }
+
+    /* Left Section: Inputs & Controls */
+    .calculator-section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--text-main);
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      background-color: var(--input-bg);
+      border: 1px solid var(--shadow-border);
+      border-radius: 6px;
+      color: var(--text-main);
+      font-size: 1rem;
+      padding: 10px 12px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--btn-primary);
+    }
+
+    button {
+      width: 100%;
+      background-color: var(--btn-primary);
+      color: var(--text-main);
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 12px;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: var(--btn-hover);
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 16px;
+      background-color: var(--input-bg);
+      border-radius: 6px;
+      border-left: 4px solid var(--btn-primary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    #result span {
+      color: var(--text-sub);
+    }
+
+    /* Right Section: Chart Panel */
+    .chart-section {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: var(--input-bg);
+      border: 1px solid var(--shadow-border);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .chart-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-sub);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    /* Mobile Responsive Layout (Stacks vertically on small screens) */
+    @media (max-width: 768px) {
+      .dashboard-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <!-- Left Column: Inputs & Results -->
+    <div class="calculator-section">
+      <h2>Financial Calculator</h2>
+
+      <div class="input-group">
+        <label for="principal">Initial Deposit ($)</label>
+        <input type="number" id="principal" value="10000">
+      </div>
+
+      <div class="input-group">
+        <label for="rate">Annual Interest Rate (%)</label>
+        <input type="number" id="rate" value="5">
+      </div>
+
+      <div class="input-group">
+        <label for="years">Time (Years)</label>
+        <input type="number" id="years" value="10">
+      </div>
+
+      <button onclick="calculateInterest()">Calculate Growth</button>
+
+      <div id="result">
+        Click calculate to view estimated growth.
+      </div>
+    </div>
+
+    <!-- Right Column: Interactive Chart -->
+    <div class="chart-section">
+      <div class="chart-title">GROWTH OVER TIME</div>
+      <canvas id="growthChart"></canvas>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
